@@ -1,6 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+pair<int,int> solution(vector<int> &arr, int target)
+{
+    map<int,int> m;
+    for(int i=0; i<arr.size(); i++)
+    {
+        m[arr[i]] = i;
+    }
+
+    for(int i=0; i<arr.size(); i++)
+    {
+        int curr = arr[i];
+        int x = target-curr;
+        if(m.find(x)!=m.end())
+            return make_pair(i,m[x]);
+    }
+
+    return make_pair(-1,-1);
+}
+
 int main()
 {
     int n;
@@ -10,33 +29,8 @@ int main()
         cin>>arr[i];
     int target;
     cin>>target;
-
-    vector<pair<int, int>> p;
-    for(int i=0; i<n; i++)
-    {
-        pair<int,int> temp;
-        temp.first = arr[i];
-        temp.second = i;
-        p.push_back(temp);
-    }
-
-    sort(p.begin(), p.end());
-
-    int s = 0;
-    int e = n-1;
-
-    while(s<e)
-    {
-        int sum = p[s].first+p[e].first;
-        if(sum==target)
-        {
-            cout<<p[s].second<<" "<<p[e].second;
-            return 0;
-        }
-        else if(sum>target)
-            e--;
-        else if(sum<target)
-            s++;
-    }
+    pair<int,int> ans = solution(arr, target);
+    cout<<ans.first<<" "<<ans.second;
     return 0;
+    
 }
